@@ -1,4 +1,14 @@
-function ChatWindow({ messages }) {
+import { useState } from 'react'
+
+function ChatWindow({ messages, onSend }) {
+    const [inputValue, setInputValue] = useState('')
+
+    function handleSend() {
+        if (!inputValue.trim()) return
+        onSend(inputValue)
+        setInputValue('')
+    }
+
     return (
         <main className="chat-window">
             <header className="chat-header">
@@ -14,8 +24,14 @@ function ChatWindow({ messages }) {
             </div>
 
             <footer className="message-input-area">
-                <input type="text" id="message-input" placeholder="Введите сообщение..." />
-                <button id="send-button">Отправить</button>
+                <input
+                    type="text"
+                    id="message-input"
+                    placeholder="Введите сообщение..."
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                />
+                <button id="send-button" onClick={handleSend}>Отправить</button>
             </footer>
         </main>
     )
