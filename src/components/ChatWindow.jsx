@@ -30,6 +30,10 @@ function ChatWindow({ messages, onSend }) {
                     placeholder="Введите сообщение..."
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(eve) => {
+                        if (eve.key === 'Enter')
+                            handleSend()
+                    }}
                 />
                 <button id="send-button" onClick={handleSend}>Отправить</button>
             </footer>

@@ -17,6 +17,17 @@ function App() {
             type: 'sent'
         }
         setMessages([...messages, newMessage])
+
+        setTimeout(() => {
+            setMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                    id: Date.now() + 1,
+                    text: 'Это автоматический ответ',
+                    type: 'received'
+                }
+            ])
+        }, 1000)
     }
 
     return (
