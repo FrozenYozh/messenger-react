@@ -1,11 +1,17 @@
-function Sidebar() {
+function Sidebar({ chats, currentChatId, onSelectChat }) {
     return (
         <aside className="sidebar">
             <h2>Диалоги</h2>
             <ul>
-                <li>Анна</li>
-                <li>Максим</li>
-                <li>Команда</li>
+                {chats.map(chat => (
+                    <li
+                        key={chat.id}
+                        className={chat.id === currentChatId ? 'active' : ''}
+                        onClick={() => onSelectChat(chat.id)}
+                    >
+                        {chat.name}
+                    </li>
+                ))}
             </ul>
         </aside>
     )

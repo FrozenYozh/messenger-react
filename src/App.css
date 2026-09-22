@@ -94,3 +94,20 @@ body {
     border-radius: 24px;
     cursor: pointer;
 }
+
+.sidebar li {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    list-style: none;
+}
+
+.sidebar li:hover {
+    background: #e9ecef;
+}
+
+.sidebar li.active {
+    background: #d0e2ff;
+    font-weight: 600;
+}
