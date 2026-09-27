@@ -1,10 +1,11 @@
 import {useState, useEffect} from 'react'
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 import './App.css'
-import Sidebar from "./components/Sidebar";
-import ChatWindow from "./components/ChatWindow";
+import Login from './pages/Login'
+import Chat from './pages/Chat'
 
 function App() {
-
+    const [userName, setUserName] = useState('')
     const [chats, setChats] = useState(() => {
 
         const saved = localStorage.getItem('messenger_chats')
@@ -43,7 +44,6 @@ function App() {
     })
 
     const [currentChatId, setCurrentChatId] = useState(1);
-
     const currentChat = chats.find(chat => chat.id === currentChatId);
 
     useEffect(() => {
@@ -83,17 +83,34 @@ function App() {
     }
 
     return (
-        <div className="app">
-            <Sidebar
-                chats={chats}
-                currentChatId={currentChatId}
-                onSelectChat={setCurrentChatId}
-            />
-            <ChatWindow
-                chat={currentChat}
-                onSend={addMessage}
-            />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/login"
+                    element={<Login onLogin={setUserName}/>}
+                />
+                <Route
+                    path="/chat"
+                    element={
+                        userName ? (
+                            <Chat
+                                chats={chats}
+                                currentChatId={currentChatId}
+                                onSelectChat={setCurrentChatId}
+                                currentChat={currentChat}
+                                onSend={addMessage}
+                            />
+                        ) : (
+                            <Navigate to="/login"/>
+                        )
+                    }
+                />
+                <Route
+                    path="*"
+                    element={<Navigate to="/login"/>}
+                />
+            </Routes>
+        </BrowserRouter>
     )
 }
 
